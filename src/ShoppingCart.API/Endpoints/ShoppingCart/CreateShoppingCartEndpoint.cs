@@ -16,7 +16,7 @@ namespace ShoppingCart.API.Endpoints.ShoppingCart
 
         private static async Task<IResult> HandleAsync(ItemCart item,
                                                        ClaimsPrincipal user,
-                                                       IShoppingCartRepository cartRepository,
+                                                       ICustomerCartRepository cartRepository,
                                                        IShoppingCartUseCase cartUseCase)
         {
             var customerIdClaim = user.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sub)?.Value;
@@ -25,10 +25,9 @@ namespace ShoppingCart.API.Endpoints.ShoppingCart
 
             var customerCart = await cartRepository.GetByIdAsync(customerIdClaim);
 
-            if (!customerCart.IsSuccess)
-            {
-                await cartUseCase.HandleNewShoppingCart(new(customerIdClaim), item);
-            }
+            var result = !customerCart.IsSuccess
+                ? await cartUseCase.HandleNewShoppingCart(new(customerIdClaim), item)
+                : await cartUseCase.HandleExistentShoppingCart(new(customerIdClaim), item);
 
             return TypedResults.Ok(customerCart);
         }

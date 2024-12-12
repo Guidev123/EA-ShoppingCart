@@ -9,11 +9,11 @@ using ShoppingCart.API.Data;
 
 #nullable disable
 
-namespace ShoppingCart.API.Migrations
+namespace ShoppingCart.API.Data.Migrations
 {
     [DbContext(typeof(CartDbContext))]
-    [Migration("20241211190024_Init")]
-    partial class Init
+    [Migration("20241212104539_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,8 +31,9 @@ namespace ShoppingCart.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("CustomerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
@@ -64,6 +65,9 @@ namespace ShoppingCart.API.Migrations
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

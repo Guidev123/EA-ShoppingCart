@@ -12,7 +12,7 @@ namespace ShoppingCart.API.Middlewares
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection") ?? string.Empty));
         public static void AddRepositories(this WebApplicationBuilder builder)
         {
-            builder.Services.AddTransient<IShoppingCartRepository, ShoppingCartRepository>();
+            builder.Services.AddTransient<ICustomerCartRepository, CustomerCartRepository>();
         }
     }
 }

@@ -13,7 +13,7 @@ namespace ShoppingCart.API.Endpoints.ShoppingCart
                 .WithOrder(1)
                 .Produces<Response<CustomerCart?>>();
 
-        private static async Task<IResult> HandleAsync(ClaimsPrincipal user, IShoppingCartRepository cartRepository)
+        private static async Task<IResult> HandleAsync(ClaimsPrincipal user, ICustomerCartRepository cartRepository)
         {
             var customerIdClaim = user.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sub);
             if (customerIdClaim == null)
