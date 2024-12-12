@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{E3
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingCart.API", "src\ShoppingCart.API\ShoppingCart.API.csproj", "{3CA05CEF-9E8D-4E16-A890-D3A4C83E0A95}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EA.CommonLib", "..\CommonLib\src\EA.CommonLib\EA.CommonLib.csproj", "{D2A811B9-6B5F-4FBC-8ED9-347AE03C0BB2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{3CA05CEF-9E8D-4E16-A890-D3A4C83E0A95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CA05CEF-9E8D-4E16-A890-D3A4C83E0A95}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3CA05CEF-9E8D-4E16-A890-D3A4C83E0A95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2A811B9-6B5F-4FBC-8ED9-347AE03C0BB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2A811B9-6B5F-4FBC-8ED9-347AE03C0BB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2A811B9-6B5F-4FBC-8ED9-347AE03C0BB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2A811B9-6B5F-4FBC-8ED9-347AE03C0BB2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -29,5 +35,6 @@ Global
 		{A205A3ED-699C-400F-9893-864F05FD63DF} = {C73433D8-9D70-46C0-8F6D-E2715C7E5261}
 		{E330089F-0592-420C-B0F8-91CA4D58F7F7} = {C73433D8-9D70-46C0-8F6D-E2715C7E5261}
 		{3CA05CEF-9E8D-4E16-A890-D3A4C83E0A95} = {E330089F-0592-420C-B0F8-91CA4D58F7F7}
+		{D2A811B9-6B5F-4FBC-8ED9-347AE03C0BB2} = {A205A3ED-699C-400F-9893-864F05FD63DF}
 	EndGlobalSection
 EndGlobal
