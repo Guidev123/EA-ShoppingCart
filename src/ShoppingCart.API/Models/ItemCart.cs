@@ -28,6 +28,6 @@ namespace ShoppingCart.API.Models
         internal void AssociateCart(Guid cartId) => CartId = cartId;
         internal decimal CalculateValue() => Quantity * Price;
         internal void AddUnity(int quantity) => Quantity += quantity;
-        internal ValidationResult Validate() => new OrderItemValidator().Validate(this);
+        internal void UpdateUnities(int quantity) => Quantity = quantity;
     }
 }

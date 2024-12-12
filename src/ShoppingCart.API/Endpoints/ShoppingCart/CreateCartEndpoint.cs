@@ -1,26 +1,22 @@
-﻿using EA.CommonLib.Responses;
-using ShoppingCart.API.Data.Repositoreis.Interfaces;
+﻿using ShoppingCart.API.Data.Repositoreis.Interfaces;
 using ShoppingCart.API.Models;
+using ShoppingCart.API.Responses;
 using ShoppingCart.API.UseCases.Interfaces;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 
 namespace ShoppingCart.API.Endpoints.ShoppingCart
 {
-    public class CreateShoppingCartEndpoint : IEndpoint
+    public class CreateCartEndpoint : IEndpoint
     {
-        public static void Map(IEndpointRouteBuilder app) => app.MapPost("/", HandleAsync)
-                .WithOrder(1)
-                .Produces<Response<CustomerCart?>>();
+        public static void Map(IEndpointRouteBuilder app) => app.MapPost("/", HandleAsync).Produces<Response<CustomerCart?>>();
 
         private static async Task<IResult> HandleAsync(ItemCart item,
                                                        IUserUseCase user,
                                                        ICustomerCartRepository cartRepository,
-                                                       IShoppingCartUseCase cartUseCase)
+                                                       ICartUseCase cartUseCase)
         {
             var userId = user.GetUserId();
 
-            var customerCart = await cartRepository.GetByIdAsync(userId);
+            var customerCart = await cartRepository.GetByCustomerIdAsync(userId);
 
             var result = !customerCart.IsSuccess
                 ? await cartUseCase.HandleNewShoppingCart(new(userId), item)

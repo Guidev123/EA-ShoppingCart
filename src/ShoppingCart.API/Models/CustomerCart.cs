@@ -35,5 +35,29 @@ namespace ShoppingCart.API.Models
             Itens.Add(item);
             GetTotalPrice();
         }
+
+        internal void UpdateItem(ItemCart item)
+        {
+            item.AssociateCart(Id);
+
+            var existentItem = GetProductById(item.ProductId);
+
+            Itens.Remove(existentItem);
+            Itens.Add(item);
+
+            GetTotalPrice();
+        }
+
+        internal void RemoveItem(ItemCart item)
+        {
+            Itens.Remove(GetProductById(item.ProductId));
+            GetTotalPrice();
+        }
+
+        internal void UpdateUnities(ItemCart item, int unities)
+        {
+            item.UpdateUnities(unities);
+            UpdateItem(item);
+        }
     }
 }

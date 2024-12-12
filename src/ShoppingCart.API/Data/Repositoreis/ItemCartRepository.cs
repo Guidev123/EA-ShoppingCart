@@ -1,4 +1,5 @@
-﻿using ShoppingCart.API.Data.Repositoreis.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using ShoppingCart.API.Data.Repositoreis.Interfaces;
 using ShoppingCart.API.Models;
 
 namespace ShoppingCart.API.Data.Repositoreis
@@ -12,7 +13,19 @@ namespace ShoppingCart.API.Data.Repositoreis
             await _context.SaveChangesAsync();
         }
 
-        public void Update(ItemCart item) =>
+        public async Task<ItemCart?> GetItemCartByIdAsync(Guid cartId, Guid productId) => 
+            await _context.ItemCart.FirstOrDefaultAsync(x => x.CartId == cartId && x.ProductId == productId);
+
+        public async Task RemoveAsync(ItemCart item)
+        {
+            _context.ItemCart.Remove(item);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(ItemCart item)
+        {
             _context.ItemCart.Update(item);
+            await _context.SaveChangesAsync();
+        }
     }
 }

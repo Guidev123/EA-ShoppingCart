@@ -1,6 +1,6 @@
 ﻿namespace ShoppingCart.API.Endpoints.ShoppingCart
 {
-    public class UpdateShoppingCartEndpoint : IEndpoint
+    public class RemoveItemCartEndpoint : IEndpoint
     {
         public static void Map(IEndpointRouteBuilder app)
         {

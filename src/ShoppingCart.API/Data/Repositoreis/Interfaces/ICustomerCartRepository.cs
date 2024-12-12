@@ -1,12 +1,12 @@
-﻿using EA.CommonLib.Responses;
-using ShoppingCart.API.Models;
+﻿using ShoppingCart.API.Models;
+using ShoppingCart.API.Responses;
 
 namespace ShoppingCart.API.Data.Repositoreis.Interfaces
 {
     public interface ICustomerCartRepository
     {
-        Task<Response<CustomerCart>> GetByIdAsync(string id);
+        Task<Response<CustomerCart>> GetByCustomerIdAsync(string id);
         Task CreateAsync(CustomerCart customerCart);
-        void Update(CustomerCart customerCart, Guid productId);
+        Task UpdateAsync(CustomerCart customerCart);
     }
 }

@@ -1,7 +1,7 @@
-﻿using EA.CommonLib.Responses;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ShoppingCart.API.Data.Repositoreis.Interfaces;
 using ShoppingCart.API.Models;
+using ShoppingCart.API.Responses;
 
 namespace ShoppingCart.API.Data.Repositoreis
 {
@@ -15,13 +15,16 @@ namespace ShoppingCart.API.Data.Repositoreis
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<Response<CustomerCart>> GetByIdAsync(string id)
+        public async Task<Response<CustomerCart>> GetByCustomerIdAsync(string id)
         {
             var cart = await _dbContext.CustomerCart.Include(x => x.Itens).FirstOrDefaultAsync(x => x.CustomerId == id);
             return cart is not null ? new Response<CustomerCart>(cart, 200) : new Response<CustomerCart>(null, 404);
         }
 
-        public void Update(CustomerCart customerCart, Guid productId) => 
-            _dbContext.ItemCart.Update(customerCart.GetProductById(productId));
+        public async Task UpdateAsync(CustomerCart customerCart)
+        {
+            _dbContext.CustomerCart.Update(customerCart);
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

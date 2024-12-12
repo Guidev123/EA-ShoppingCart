@@ -4,7 +4,9 @@ namespace ShoppingCart.API.Data.Repositoreis.Interfaces
 {
     public interface IItemCartRepository
     {
+        Task<ItemCart?> GetItemCartByIdAsync(Guid cartId, Guid productId);
         Task CreateAsync(ItemCart item);
-        void Update(ItemCart item);
+        Task UpdateAsync(ItemCart item);
+        Task RemoveAsync(ItemCart item);
     }
 }

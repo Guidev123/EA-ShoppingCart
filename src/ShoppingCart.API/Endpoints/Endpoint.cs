@@ -10,10 +10,10 @@ namespace ShoppingCart.API.Endpoints
                 .MapGroup("");
 
             endpoints.MapGroup("api/v1/shopping-cart")
-                .MapEndpoint<CreateShoppingCartEndpoint>()
-                .MapEndpoint<GetShoppingCartEndpoint>()
-                .MapEndpoint<RemoveShoppingCartEndpoint>()
-                .MapEndpoint<UpdateShoppingCartEndpoint>();
+                .MapEndpoint<CreateCartEndpoint>()
+                .MapEndpoint<GetCartEndpoint>()
+                .MapEndpoint<RemoveItemCartEndpoint>()
+                .MapEndpoint<UpdateItemCartEndpoint>();
         }
 
         private static IEndpointRouteBuilder MapEndpoint<TEndpoint>(this IEndpointRouteBuilder app)
