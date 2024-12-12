@@ -1,5 +1,4 @@
-﻿
-using EA.CommonLib.Responses;
+﻿using EA.CommonLib.Responses;
 using ShoppingCart.API.Data.Repositoreis.Interfaces;
 using ShoppingCart.API.Models;
 using ShoppingCart.API.UseCases.Interfaces;
@@ -15,21 +14,21 @@ namespace ShoppingCart.API.Endpoints.ShoppingCart
                 .Produces<Response<CustomerCart?>>();
 
         private static async Task<IResult> HandleAsync(ItemCart item,
-                                                       ClaimsPrincipal user,
+                                                       IUserUseCase user,
                                                        ICustomerCartRepository cartRepository,
                                                        IShoppingCartUseCase cartUseCase)
         {
-            var customerIdClaim = user.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sub)?.Value;
-            if (customerIdClaim == null)
-                return TypedResults.BadRequest("User ID not found in token.");
+            var userId = user.GetUserId();
 
-            var customerCart = await cartRepository.GetByIdAsync(customerIdClaim);
+            var customerCart = await cartRepository.GetByIdAsync(userId);
 
             var result = !customerCart.IsSuccess
-                ? await cartUseCase.HandleNewShoppingCart(new(customerIdClaim), item)
-                : await cartUseCase.HandleExistentShoppingCart(new(customerIdClaim), item);
+                ? await cartUseCase.HandleNewShoppingCart(new(userId), item)
+                : await cartUseCase.HandleExistentShoppingCart(new(userId), item);
 
-            return TypedResults.Ok(customerCart);
+            return result.IsSuccess
+                ? TypedResults.Created(string.Empty, result) 
+                : TypedResults.BadRequest(result);
         }
     }
 }
