@@ -20,6 +20,7 @@ namespace ShoppingCart.API.Middlewares
 
         public static void AddUseCases(this WebApplicationBuilder builder)
         {
+            builder.Services.AddHttpContextAccessor();
             builder.Services.AddTransient<IUserUseCase, UserUseCase>();
             builder.Services.AddTransient<ICartUseCase, CartUseCase>();
         }

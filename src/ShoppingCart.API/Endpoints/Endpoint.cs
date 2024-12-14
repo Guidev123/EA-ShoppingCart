@@ -10,6 +10,7 @@ namespace ShoppingCart.API.Endpoints
                 .MapGroup("");
 
             endpoints.MapGroup("api/v1/shopping-cart")
+                .WithTags("ShoppingCart")
                 .MapEndpoint<CreateCartEndpoint>()
                 .MapEndpoint<GetCartEndpoint>()
                 .MapEndpoint<RemoveItemCartEndpoint>()
