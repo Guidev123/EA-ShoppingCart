@@ -8,6 +8,9 @@ builder.Services.AddSwaggerGen();
 builder.AddDbContext();
 builder.AddRepositories();
 builder.AddUseCases();
+builder.AddMessageBusConfiguration();
+builder.AddJwtConfiguration();
+builder.AddDocumentationConfig();
 
 var app = builder.Build();
 
@@ -16,5 +19,7 @@ app.UseSwaggerUI();
 
 
 app.UseHttpsRedirection();
+app.UseSecurity();
+
 app.MapEndpoints();
 app.Run();

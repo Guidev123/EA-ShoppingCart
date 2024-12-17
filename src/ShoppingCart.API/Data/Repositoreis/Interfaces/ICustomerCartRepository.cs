@@ -8,5 +8,6 @@ namespace ShoppingCart.API.Data.Repositoreis.Interfaces
         Task<Response<CustomerCart>> GetByCustomerIdAsync(string id);
         Task CreateAsync(CustomerCart customerCart);
         Task UpdateAsync(CustomerCart customerCart);
+        Task DeleteAsync(CustomerCart customerCart);
     }
 }

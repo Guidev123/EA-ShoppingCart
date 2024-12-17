@@ -15,6 +15,12 @@ namespace ShoppingCart.API.Data.Repositoreis
             await _dbContext.SaveChangesAsync();
         }
 
+        public async Task DeleteAsync(CustomerCart cart)
+        {
+            _dbContext.CustomerCart.Remove(cart);
+            await _dbContext.SaveChangesAsync();
+        }
+
         public async Task<Response<CustomerCart>> GetByCustomerIdAsync(string id)
         {
             var cart = await _dbContext.CustomerCart.Include(x => x.Itens).FirstOrDefaultAsync(x => x.CustomerId == id);

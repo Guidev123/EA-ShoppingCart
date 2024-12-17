@@ -50,7 +50,7 @@ namespace ShoppingCart.API.Data
                 .HasForeignKey(x => x.CartId);
 
             foreach(var rel in modelBuilder.Model.GetEntityTypes().SelectMany(x => x.GetForeignKeys()))
-                rel.DeleteBehavior = DeleteBehavior.ClientSetNull;
+                rel.DeleteBehavior = DeleteBehavior.Cascade;
         }
     }
 }
