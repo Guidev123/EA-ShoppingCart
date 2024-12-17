@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace ShoppingCart.API.Models
+﻿namespace ShoppingCart.API.Models
 {
     public class CustomerCart
     {
@@ -16,8 +14,15 @@ namespace ShoppingCart.API.Models
         public string CustomerId { get; } = string.Empty;
         public decimal TotalPrice { get; private set; }
         public List<ItemCart> Itens { get; private set; } = [];
+        public bool VoucherIsUsed { get; private set; }
+        public decimal Discount { get; private set; }
+        public Voucher Voucher { get; private set; } = null!;
 
-        internal void GetTotalPrice() => TotalPrice = Itens.Sum(x => x.CalculateValue());
+        internal void CalculateTotalPrice()
+        {
+            TotalPrice = Itens.Sum(x => x.CalculateValue());
+            CalculateTotalPriceDiscount();
+        }
         internal ItemCart GetProductById(Guid productId) => Itens.First(x => x.ProductId == productId);
         internal bool ItemCartAlreadyExists(ItemCart item) => Itens.Any(x => x.ProductId == item.ProductId);
         internal void AddItem(ItemCart item)
@@ -33,7 +38,7 @@ namespace ShoppingCart.API.Models
             }
 
             Itens.Add(item);
-            GetTotalPrice();
+            CalculateTotalPrice();
         }
 
         internal void UpdateItem(ItemCart item)
@@ -45,19 +50,54 @@ namespace ShoppingCart.API.Models
             Itens.Remove(existentItem);
             Itens.Add(item);
 
-            GetTotalPrice();
+            CalculateTotalPrice();
         }
 
         internal void RemoveItem(ItemCart item)
         {
             Itens.Remove(GetProductById(item.ProductId));
-            GetTotalPrice();
+            CalculateTotalPrice();
         }
 
         internal void UpdateUnities(ItemCart item, int unities)
         {
             item.UpdateUnities(unities);
             UpdateItem(item);
+        }
+
+        public void ApplyVoucher(Voucher voucher)
+        {
+            Voucher = voucher;
+            VoucherIsUsed = true;
+            CalculateTotalPrice();
+        }
+
+        private void CalculateTotalPriceDiscount()
+        {
+            if(!VoucherIsUsed) return;
+
+            decimal discount = 0;
+            var value = TotalPrice;
+
+            if(Voucher.DiscountType == Enums.EDiscountType.Percentual)
+            {
+                if (Voucher.Percentual.HasValue)
+                {
+                    discount = (value * Voucher.Percentual.Value) / 100;
+                    value -= discount;
+                }
+            }
+            else
+            {
+                if (Voucher.DiscountValue.HasValue)
+                {
+                    discount = Voucher.DiscountValue.Value;
+                    value -= discount;
+                }
+            }
+
+            TotalPrice = value < 0 ? 0 : value;
+            Discount = discount;
         }
     }
 }

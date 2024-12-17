@@ -14,13 +14,13 @@ namespace ShoppingCart.API.Endpoints.ShoppingCart
                                                        ICustomerCartRepository cartRepository,
                                                        ICartUseCase cartUseCase)
         {
-            var userId = user.GetUserId();
+            var customerId = user.GetUserId();
 
-            var customerCart = await cartRepository.GetByCustomerIdAsync(userId);
+            var customerCart = await cartRepository.GetByCustomerIdAsync(user.GetUserId());
 
             var result = !customerCart.IsSuccess
-                ? await cartUseCase.HandleNewShoppingCart(new(userId), item)
-                : await cartUseCase.HandleExistentShoppingCart(new(userId), item);
+                ? await cartUseCase.HandleNewShoppingCart(new(customerId), item)
+                : await cartUseCase.HandleExistentShoppingCart(new(customerId), item);
 
             return result.IsSuccess
                 ? TypedResults.Created(string.Empty, result) 

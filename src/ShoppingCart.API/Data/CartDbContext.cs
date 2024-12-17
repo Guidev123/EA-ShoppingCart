@@ -18,11 +18,28 @@ namespace ShoppingCart.API.Data
         {
             foreach (var property in modelBuilder.Model.GetEntityTypes().SelectMany(e =>
                 e.GetProperties().Where(p => p.ClrType == typeof(string))))
-                property.SetColumnType("VARCHAR(100)");
+                property.SetColumnType("VARCHAR(160)");
+
+            modelBuilder.Ignore<Voucher>();
 
             modelBuilder.Entity<CustomerCart>()
                 .HasIndex(x => x.CustomerId)
                 .HasDatabaseName("IDX_Customer");
+
+            modelBuilder.Entity<CustomerCart>()
+                .Ignore(c => c.Voucher)
+                .OwnsOne(x => x.Voucher, v =>
+                {
+                    v.Property(vc => vc.Code)
+                    .HasColumnName("VoucherCode")
+                    .HasColumnType("VARCHAR(50)");
+
+                    v.Property(vc => vc.DiscountType).HasColumnName("DiscountType");
+
+                    v.Property(x => x.Percentual).HasColumnName("Percentual");
+
+                    v.Property(x => x.DiscountValue).HasColumnName("DiscountValue");
+                });
 
             modelBuilder.Entity<CustomerCart>().HasKey(x => x.Id);
             modelBuilder.Entity<ItemCart>().HasKey(x => x.Id);

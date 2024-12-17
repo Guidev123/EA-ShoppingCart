@@ -11,6 +11,7 @@ namespace ShoppingCart.API.Endpoints
 
             endpoints.MapGroup("api/v1/shopping-cart")
                 .WithTags("ShoppingCart")
+                .MapEndpoint<ApplyVoucherInCartEndpoint>()
                 .MapEndpoint<CreateCartEndpoint>()
                 .MapEndpoint<GetCartEndpoint>()
                 .MapEndpoint<RemoveItemCartEndpoint>()

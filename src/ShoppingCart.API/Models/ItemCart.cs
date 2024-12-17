@@ -1,7 +1,4 @@
-﻿using FluentValidation.Results;
-using ShoppingCart.API.Models.Validations;
-
-namespace ShoppingCart.API.Models
+﻿namespace ShoppingCart.API.Models
 {
     public class ItemCart
     {

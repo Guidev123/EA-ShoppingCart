@@ -12,8 +12,8 @@ using ShoppingCart.API.Data;
 namespace ShoppingCart.API.Data.Migrations
 {
     [DbContext(typeof(CartDbContext))]
-    [Migration("20241212104539_Initial")]
-    partial class Initial
+    [Migration("20241216152249_Voucher")]
+    partial class Voucher
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,8 +35,14 @@ namespace ShoppingCart.API.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("VoucherIsUsed")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -57,11 +63,11 @@ namespace ShoppingCart.API.Data.Migrations
 
                     b.Property<string>("Image")
                         .IsRequired()
-                        .HasColumnType("VARCHAR(100)");
+                        .HasColumnType("VARCHAR(160)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("VARCHAR(100)");
+                        .HasColumnType("VARCHAR(160)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -74,6 +80,42 @@ namespace ShoppingCart.API.Data.Migrations
                     b.HasIndex("CartId");
 
                     b.ToTable("ItemCart");
+                });
+
+            modelBuilder.Entity("ShoppingCart.API.Models.CustomerCart", b =>
+                {
+                    b.OwnsOne("ShoppingCart.API.Models.Voucher", "Voucher", b1 =>
+                        {
+                            b1.Property<Guid>("CustomerCartId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("Code")
+                                .IsRequired()
+                                .HasColumnType("VARCHAR(50)")
+                                .HasColumnName("VoucherCode");
+
+                            b1.Property<int>("DiscountType")
+                                .HasColumnType("int")
+                                .HasColumnName("DiscountType");
+
+                            b1.Property<decimal?>("DiscountValue")
+                                .HasColumnType("decimal(18,2)")
+                                .HasColumnName("DiscountValue");
+
+                            b1.Property<decimal?>("Percentual")
+                                .HasColumnType("decimal(18,2)")
+                                .HasColumnName("Percentual");
+
+                            b1.HasKey("CustomerCartId");
+
+                            b1.ToTable("CustomerCart");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CustomerCartId");
+                        });
+
+                    b.Navigation("Voucher")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ShoppingCart.API.Models.ItemCart", b =>

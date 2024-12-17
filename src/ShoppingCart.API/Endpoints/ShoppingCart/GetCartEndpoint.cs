@@ -11,9 +11,7 @@ namespace ShoppingCart.API.Endpoints.ShoppingCart
 
         private static async Task<IResult> HandleAsync(IUserUseCase user, ICustomerCartRepository cartRepository)
         {
-            var customerIdClaim = user.GetUserId();
-
-            var customerCart = await cartRepository.GetByCustomerIdAsync(customerIdClaim);
+            var customerCart = await cartRepository.GetByCustomerIdAsync(user.GetUserId());
 
             return customerCart.IsSuccess
                 ? TypedResults.Ok(customerCart)
