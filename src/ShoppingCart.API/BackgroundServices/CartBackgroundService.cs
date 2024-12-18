@@ -1,5 +1,5 @@
-﻿using EA.CommonLib.MessageBus;
-using EA.CommonLib.MessageBus.Integration.OrderPlaced;
+﻿using SharedLib.Domain.Messages.Integration.OrderPlaced;
+using SharedLib.MessageBus;
 using ShoppingCart.API.Data.Repositoreis.Interfaces;
 
 namespace ShoppingCart.API.BackgroundServices
