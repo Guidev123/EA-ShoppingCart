@@ -1,5 +1,5 @@
-﻿using ShoppingCart.API.Models;
-using ShoppingCart.API.Responses;
+﻿using SharedLib.Domain.Responses;
+using ShoppingCart.API.Models;
 
 namespace ShoppingCart.API.UseCases.Interfaces
 {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SharedLib.Domain.Responses;
 using ShoppingCart.API.Data.Repositoreis.Interfaces;
 using ShoppingCart.API.Models;
-using ShoppingCart.API.Responses;
 
 namespace ShoppingCart.API.Data.Repositoreis
 {

@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using SharedLib.Domain.Responses;
 using ShoppingCart.API.Data.Repositoreis.Interfaces;
 using ShoppingCart.API.Models;
 using ShoppingCart.API.Models.Validations;
-using ShoppingCart.API.Responses;
 using ShoppingCart.API.UseCases.Interfaces;
 
 namespace ShoppingCart.API.UseCases

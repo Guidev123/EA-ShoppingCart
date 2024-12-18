@@ -1,5 +1,6 @@
 using ShoppingCart.API.Endpoints;
 using ShoppingCart.API.Middlewares;
+using System.IdentityModel.Tokens.Jwt;
 
 var builder = WebApplication.CreateBuilder(args);
 

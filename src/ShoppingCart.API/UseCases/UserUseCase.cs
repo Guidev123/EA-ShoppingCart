@@ -1,16 +1,19 @@
 ﻿using ShoppingCart.API.UseCases.Interfaces;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace ShoppingCart.API.UseCases
 {
-    public class UserUseCase(IHttpContextAccessor httpContextAccessor) : IUserUseCase
+    public class UserUseCase : IUserUseCase
     {
-        private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
-        public string GetUserId() =>
-             _httpContextAccessor.HttpContext?.User.Claims.
-            FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sub)?.Value
-            ?? string.Empty;
-    }
+        public string GetUserId(ClaimsPrincipal principal)
+        {
+            if (principal == null)
+            {
+                throw new(nameof(principal));
+            }
 
+            var claim = principal.FindFirst("sub") ?? principal.FindFirst(ClaimTypes.NameIdentifier);
+            return claim?.Value ?? string.Empty;
+        }
+    }
 }
